@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from findAItest import your_search_function
 
+
 app = Flask(__name__)
 
 # Route to serve a simple HTML page (for a UI)
