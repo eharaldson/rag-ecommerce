@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LLM Database Search</title>
+</head>
+<body>
+  <h1>Search the Database</h1>
+  <form id="searchForm">
+    <input type="text" id="query" placeholder="Enter search query" required>
+    <button type="submit">Search</button>
+  </form>
+  <div id="results"></div>
+  
+  <script>
+    document.getElementById("searchForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const query = document.getElementById("query").value;
+      fetch("/search", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: query })
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("results").innerText = JSON.stringify(data.results, null, 2);
+      });
+    });
+  </script>
+</body>
+</html>
