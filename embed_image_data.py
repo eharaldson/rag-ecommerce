@@ -14,7 +14,8 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 model, preprocess = clip.load("ViT-B/32", device=device)
 
 # Load the CSV file
-df = pd.read_csv('ProductStructuredInfo.csv', index_col=0)
+dataset_directory = "/Users/erikharaldson/Documents/FindAI/DataSets/"
+df = pd.read_csv(dataset_directory+'ProductStructuredInfo.csv', index_col=0)
 
 df_len = len(df)
 row_indx = 1
@@ -83,7 +84,7 @@ def process_row(row_dict):
         return torch.zeros(1, 512).to(device).reshape(-1)
     else:
         try:
-            res = get_image_embedding_with_timeout(image_urls)
+            res = get_image_embedding_with_timeout([image_urls[0]]).reshape(-1)
             return res
         except TimeoutError:
             return torch.zeros(1, 512).to(device).reshape(-1)
